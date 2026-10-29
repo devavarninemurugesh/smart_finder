@@ -1,0 +1,90 @@
+{
+    "execution_date": "2026-10-28 18:02:49",
+    "total_tests": 10,
+    "passed": 10,
+    "failed": 0,
+    "skipped": 0,
+    "success_rate": "100.0%",
+    "tests": [
+        {
+            "nodeid": "tests/test_lab_scenarios.py::test_01_website_navigation",
+            "func_name": "test_01_website_navigation",
+            "name": "Website Navigation Test",
+            "status": "PASS",
+            "duration": 0.282,
+            "error": null
+        },
+        {
+            "nodeid": "tests/test_lab_scenarios.py::test_02_search_functionality",
+            "func_name": "test_02_search_functionality",
+            "name": "Search Functionality Test",
+            "status": "PASS",
+            "duration": 5.193,
+            "error": null
+        },
+        {
+            "nodeid": "tests/test_lab_scenarios.py::test_03_button_and_link",
+            "func_name": "test_03_button_and_link",
+            "name": "Button and Link Test",
+            "status": "PASS",
+            "duration": 1.017,
+            "error": null
+        },
+        {
+            "nodeid": "tests/test_lab_scenarios.py::test_04_form_validation",
+            "func_name": "test_04_form_validation",
+            "name": "Form Validation Test",
+            "status": "PASS",
+            "duration": 0.963,
+            "error": null
+        },
+        {
+            "nodeid": "tests/test_lab_scenarios.py::test_05_item_reporting",
+            "func_name": "test_05_item_reporting",
+            "name": "Item Reporting Test",
+            "status": "PASS",
+            "duration": 0.615,
+            "error": null
+        },
+        {
+            "nodeid": "tests/test_lab_scenarios.py::test_06_image_upload",
+            "func_name": "test_06_image_upload",
+            "name": "Image Upload Test",
+            "status": "PASS",
+            "duration": 0.863,
+            "error": null
+        },
+        {
+            "nodeid": "tests/test_lab_scenarios.py::test_07_recovery_functionality",
+            "func_name": "test_07_recovery_functionality",
+            "name": "Recovery Functionality Test",
+            "status": "PASS",
+            "duration": 0.458,
+            "error": null
+        },
+        {
+            "nodeid": "tests/test_lab_scenarios.py::test_08_data_persistence",
+            "func_name": "test_08_data_persistence",
+            "name": "Data Persistence Test",
+            "status": "PASS",
+            "duration": 1.538,
+            "error": null
+        },
+        {
+            "nodeid": "tests/test_lab_scenarios.py::test_09_invalid_input",
+            "func_name": "test_09_invalid_input",
+            "name": "Invalid Input Test",
+            "status": "PASS",
+            "duration": 0.886,
+            "error": null
+        },
+        {
+            "nodeid": "tests/test_lab_scenarios.py::test_10_reset_demo_data",
+            "func_name": "test_10_reset_demo_data",
+            "name": "Reset Demo Data Test",
+            "status": "PASS",
+            "duration": 0.318,
+            "error": null
+        }
+    ]
+}

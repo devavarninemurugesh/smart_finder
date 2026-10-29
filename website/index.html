@@ -1,0 +1,1349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="FindIt - Smart Lost & Found Management Portal for College Campuses. Role-based tracking, claims verification, photo gallery, and transparent recovery.">
+    <title>FindIt – Smart Lost & Found Management Portal</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Top Navigation Bar -->
+    <header class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="#home" class="nav-brand" id="nav-brand">
+                <div class="brand-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                        <path d="M11 8v6"></path>
+                        <path d="M8 11h6"></path>
+                    </svg>
+                </div>
+                <div class="brand-text">
+                    <span class="brand-title">Find<span class="brand-accent">It</span></span>
+                    <span class="brand-tag">Campus Lost & Found</span>
+                </div>
+            </a>
+
+            <nav class="nav-links" id="nav-links">
+                <a href="#dashboard" class="nav-link active" id="nav-dashboard-link">Dashboard</a>
+                <a href="#catalog-section" class="nav-link" id="nav-items-link">Browse Items</a>
+                <a href="#report-section" class="nav-link" id="nav-report-link">Report Incident</a>
+                <!-- Role-Specific Dynamic Navigation Links -->
+                <a href="#my-activity-section" class="nav-link d-none" id="nav-my-activity-link">My Activity</a>
+                <a href="#moderator-section" class="nav-link d-none" id="nav-moderator-link">
+                    <span class="nav-role-dot dot-mod"></span>Mod Panel
+                </a>
+                <a href="#admin-section" class="nav-link d-none" id="nav-admin-link">
+                    <span class="nav-role-dot dot-admin"></span>Admin Portal
+                </a>
+            </nav>
+
+            <div class="nav-actions">
+                <!-- Notifications Bell -->
+                <div class="notification-dropdown-wrapper" id="notif-wrapper">
+                    <button type="button" class="btn-icon" id="nav-notif-btn" title="View notifications" aria-label="Notifications">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                            <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+                        </svg>
+                        <span class="badge-count d-none" id="notif-badge">0</span>
+                    </button>
+                    <!-- Notification Panel -->
+                    <div class="notification-panel d-none" id="notif-panel">
+                        <div class="notif-header">
+                            <span class="notif-title">Campus Notifications</span>
+                            <button type="button" class="btn-text-sm" id="mark-notifs-read-btn">Mark all read</button>
+                        </div>
+                        <div class="notif-list" id="notif-list">
+                            <!-- Populated dynamically -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Reset Demo Data Button -->
+                <button type="button" class="btn btn-outline btn-sm" id="reset-demo-btn" title="Reset sample campus data">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path>
+                        <path d="M3 3v5h5"></path>
+                    </svg>
+                    <span>Reset Demo Data</span>
+                </button>
+
+                <!-- Guest: Login / Register Button -->
+                <button type="button" class="btn btn-outline btn-sm" id="nav-login-btn">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path>
+                        <polyline points="10 17 15 12 10 7"></polyline>
+                        <line x1="15" y1="12" x2="3" y2="12"></line>
+                    </svg>
+                    <span>Sign In</span>
+                </button>
+
+                <!-- Authenticated: User Menu Pill -->
+                <div class="user-menu-wrapper d-none" id="nav-user-menu">
+                    <button type="button" class="user-pill-btn" id="user-pill-btn">
+                        <div class="user-avatar" id="nav-user-avatar">DA</div>
+                        <div class="user-pill-info">
+                            <span class="user-pill-name" id="nav-user-name">Dev Anand</span>
+                            <span class="role-pill-badge role-badge-student" id="nav-user-role">Student</span>
+                        </div>
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="6 9 12 15 18 9"></polyline>
+                        </svg>
+                    </button>
+                    <!-- User Dropdown Menu -->
+                    <div class="user-dropdown d-none" id="user-dropdown">
+                        <div class="user-dropdown-header">
+                            <div class="dropdown-user-name" id="dropdown-user-fullname">Dev Anand</div>
+                            <div class="dropdown-user-email" id="dropdown-user-email">student@campus.edu</div>
+                        </div>
+                        <div class="user-dropdown-items">
+                            <button type="button" class="dropdown-item" id="dropdown-profile-btn">
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                    <circle cx="12" cy="7" r="4"></circle>
+                                </svg>
+                                <span>My Profile</span>
+                            </button>
+                            <button type="button" class="dropdown-item" id="dropdown-activity-btn">
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                    <polyline points="14 2 14 8 20 8"></polyline>
+                                </svg>
+                                <span>My Reports & Claims</span>
+                            </button>
+                            <button type="button" class="dropdown-item d-none" id="dropdown-mod-btn">
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                                </svg>
+                                <span>Moderator Panel</span>
+                            </button>
+                            <button type="button" class="dropdown-item d-none" id="dropdown-admin-btn">
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <rect x="3" y="3" width="7" height="7"></rect>
+                                    <rect x="14" y="3" width="7" height="7"></rect>
+                                    <rect x="14" y="14" width="7" height="7"></rect>
+                                    <rect x="3" y="14" width="7" height="7"></rect>
+                                </svg>
+                                <span>Admin Dashboard</span>
+                            </button>
+                            <div class="dropdown-divider"></div>
+                            <button type="button" class="dropdown-item dropdown-item-danger" id="nav-logout-btn">
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                                    <polyline points="16 17 21 12 16 7"></polyline>
+                                    <line x1="21" y1="12" x2="9" y2="12"></line>
+                                </svg>
+                                <span>Sign Out</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Report Item Button -->
+                <a href="#report-section" class="btn btn-primary btn-sm" id="nav-cta-report">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="12" y1="5" x2="12" y2="19"></line>
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                    </svg>
+                    <span>Report Item</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Global Notification Banner -->
+    <div class="notification-container" id="notification-container">
+        <div class="alert alert-success d-none" id="success-message" role="alert">
+            <div class="alert-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+            </div>
+            <span class="alert-text" id="success-message-text">Operation completed successfully!</span>
+            <button type="button" class="alert-close" id="close-success-btn" aria-label="Close message">&times;</button>
+        </div>
+
+        <div class="alert alert-error d-none" id="error-message" role="alert">
+            <div class="alert-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <line x1="12" y1="8" x2="12" y2="12"></line>
+                    <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                </svg>
+            </div>
+            <span class="alert-text" id="error-message-text">Please correct the highlighted errors.</span>
+            <button type="button" class="alert-close" id="close-error-btn" aria-label="Close message">&times;</button>
+        </div>
+    </div>
+
+    <!-- Active User Role Indicator Strip -->
+    <div class="role-status-strip" id="role-status-strip">
+        <div class="role-status-container">
+            <div class="strip-left">
+                <span class="status-indicator-dot" id="auth-status-dot"></span>
+                <span id="role-status-text">Operating as: <strong>Guest</strong> (Public Mode)</span>
+            </div>
+            <div class="strip-demo-shortcuts" id="strip-demo-shortcuts">
+                <span class="demo-label">Quick Role Demo:</span>
+                <button type="button" class="btn-demo-tag" id="quick-switch-student">Student</button>
+                <button type="button" class="btn-demo-tag" id="quick-switch-mod">Moderator</button>
+                <button type="button" class="btn-demo-tag" id="quick-switch-admin">Admin</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="main-wrapper" id="home">
+        <!-- Hero Section -->
+        <section class="hero-section" id="hero">
+            <div class="hero-content">
+                <div class="hero-badge">
+                    <span class="pulse-dot"></span>
+                    <span>Role-Based Campus Network • Verified Ownership Claims</span>
+                </div>
+                <h1 class="hero-title" id="page-heading">
+                    Smart Lost & Found <span class="gradient-text">Management Portal</span>
+                </h1>
+                <p class="hero-subtitle">
+                    Report lost belongings, register found articles with genuine photo uploads, verify claims through campus moderation, and reunite students with their items transparently.
+                </p>
+                <div class="hero-cta-group">
+                    <a href="#report-section" class="btn btn-danger btn-lg" id="btn-report-lost-hero">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="15" y1="9" x2="9" y2="15"></line>
+                            <line x1="9" y1="9" x2="15" y2="15"></line>
+                        </svg>
+                        <span>Report Lost Item</span>
+                    </a>
+                    <a href="#report-section" class="btn btn-warning btn-lg" id="btn-report-found-hero">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                            <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                        </svg>
+                        <span>Report Found Item</span>
+                    </a>
+                    <a href="#catalog-section" class="btn btn-ghost btn-lg" id="btn-browse-items">
+                        <span>Browse Catalog</span>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="9 18 15 12 9 6"></polyline>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Dashboard Statistics Section -->
+        <section class="dashboard-stats-section" id="dashboard">
+            <div class="section-header">
+                <div>
+                    <h2 class="section-title">Dashboard Overview</h2>
+                    <p class="section-subtitle">Real-time statistics of reported campus property</p>
+                </div>
+                <div class="sync-indicator" id="sync-status">
+                    <span class="sync-dot"></span>
+                    <span>Synchronized with Local Storage & Auth</span>
+                </div>
+            </div>
+
+            <!-- Personalized User Greeting Banner -->
+            <div class="user-greeting-banner d-none" id="dashboard-user-greeting">
+                <div class="greeting-avatar" id="greeting-avatar">DA</div>
+                <div class="greeting-info">
+                    <h3 class="greeting-title" id="greeting-text">Welcome back, Dev Anand!</h3>
+                    <p class="greeting-subtitle" id="greeting-role-desc">Operating with Student privileges • Computer Science</p>
+                </div>
+                <div class="greeting-actions">
+                    <a href="#report-section" class="btn btn-danger btn-sm">Report Lost Item</a>
+                    <a href="#catalog-section" class="btn btn-primary btn-sm">Browse Catalog</a>
+                </div>
+            </div>
+
+            <!-- Search Shortcuts Chips -->
+            <div class="dashboard-shortcuts-bar" id="dashboard-quick-shortcuts">
+                <span class="shortcuts-label">Quick Filters:</span>
+                <button type="button" class="shortcut-chip active" id="shortcut-all" data-category="all">All Items</button>
+                <button type="button" class="shortcut-chip" id="shortcut-laptops" data-category="Laptops">💻 Laptops</button>
+                <button type="button" class="shortcut-chip" id="shortcut-idcards" data-category="ID Cards">🪪 ID Cards</button>
+                <button type="button" class="shortcut-chip" id="shortcut-phones" data-category="Mobile Phones">📱 Mobile Phones</button>
+                <button type="button" class="shortcut-chip" id="shortcut-keys" data-category="Keys">🔑 Keys</button>
+                <button type="button" class="shortcut-chip" id="shortcut-bottles" data-category="Water Bottles">🧴 Bottles</button>
+            </div>
+
+            <div class="stats-grid" id="stats-grid">
+                <!-- Total Lost -->
+                <div class="stat-card stat-lost" id="stat-card-lost">
+                    <div class="stat-icon-wrapper">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="12" y1="8" x2="12" y2="12"></line>
+                            <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                        </svg>
+                    </div>
+                    <div class="stat-info">
+                        <span class="stat-label">Total Lost Items</span>
+                        <div class="stat-value" id="stats-total-lost">0</div>
+                        <span class="stat-trend">Reported by students & staff</span>
+                    </div>
+                </div>
+
+                <!-- Total Found -->
+                <div class="stat-card stat-found" id="stat-card-found">
+                    <div class="stat-icon-wrapper">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                        </svg>
+                    </div>
+                    <div class="stat-info">
+                        <span class="stat-label">Total Found Items</span>
+                        <div class="stat-value" id="stats-total-found">0</div>
+                        <span class="stat-trend">Turned in across blocks</span>
+                    </div>
+                </div>
+
+                <!-- Total Recovered -->
+                <div class="stat-card stat-recovered" id="stat-card-recovered">
+                    <div class="stat-icon-wrapper">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                            <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                        </svg>
+                    </div>
+                    <div class="stat-info">
+                        <span class="stat-label">Recovered & Returned</span>
+                        <div class="stat-value" id="stats-total-recovered">0</div>
+                        <span class="stat-trend">Successfully claimed items</span>
+                    </div>
+                </div>
+
+                <!-- Active Cases -->
+                <div class="stat-card stat-rate" id="stat-card-rate">
+                    <div class="stat-icon-wrapper">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="18" y1="20" x2="18" y2="10"></line>
+                            <line x1="12" y1="20" x2="12" y2="4"></line>
+                            <line x1="6" y1="20" x2="6" y2="14"></line>
+                        </svg>
+                    </div>
+                    <div class="stat-info">
+                        <span class="stat-label">Active Open Cases</span>
+                        <div class="stat-value" id="stats-total-active">0</div>
+                        <span class="stat-trend" id="recovery-rate-text">Resolving campus requests</span>
+                    </div>
+                </div>
+
+                <!-- Pending Claims -->
+                <div class="stat-card stat-claims" id="stat-card-claims">
+                    <div class="stat-icon-wrapper">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                            <polyline points="14 2 14 8 20 8"></polyline>
+                            <line x1="16" y1="13" x2="8" y2="13"></line>
+                            <line x1="16" y1="17" x2="8" y2="17"></line>
+                        </svg>
+                    </div>
+                    <div class="stat-info">
+                        <span class="stat-label">Pending Claims</span>
+                        <div class="stat-value" id="stats-total-claims">0</div>
+                        <span class="stat-trend">Awaiting admin review</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Distribution Analytics Grid -->
+            <div class="dashboard-analytics-grid" id="dashboard-analytics-grid">
+                <div class="analytics-card">
+                    <div class="analytics-card-header">
+                        <span class="analytics-title">Category Breakdown</span>
+                        <span class="badge" id="category-total-badge">Campus Articles</span>
+                    </div>
+                    <div class="distribution-list" id="dashboard-category-bars">
+                        <!-- Dynamically populated -->
+                    </div>
+                </div>
+                <div class="analytics-card">
+                    <div class="analytics-card-header">
+                        <span class="analytics-title">Status Distribution</span>
+                        <span class="badge" id="status-total-badge">Lifecycle State</span>
+                    </div>
+                    <div class="distribution-list" id="dashboard-status-bars">
+                        <!-- Dynamically populated -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Reporting Forms Section -->
+        <section class="report-section" id="report-section">
+            <div class="section-header">
+                <div>
+                    <h2 class="section-title">Report an Item</h2>
+                    <p class="section-subtitle">File an accurate incident report with verifiable details and optional photo</p>
+                </div>
+                <!-- Tab Controls -->
+                <div class="tabs-nav" role="tablist">
+                    <button type="button" class="tab-btn active" id="tab-btn-lost" role="tab" aria-selected="true" aria-controls="lost-tab-panel">
+                        <span class="tab-icon lost-icon"></span>
+                        Report Lost Item
+                    </button>
+                    <button type="button" class="tab-btn" id="tab-btn-found" role="tab" aria-selected="false" aria-controls="found-tab-panel">
+                        <span class="tab-icon found-icon"></span>
+                        Report Found Item
+                    </button>
+                </div>
+            </div>
+
+            <div class="report-form-card">
+                <!-- Lost Item Form -->
+                <div class="tab-panel active" id="lost-tab-panel" role="tabpanel">
+                    <div class="form-banner banner-lost">
+                        <div class="banner-badge">Lost Item Entry</div>
+                        <p>Fill out the specifics of your lost personal item to help finders identify and return it.</p>
+                    </div>
+
+                    <form id="lost-item-form" novalidate>
+                        <input type="hidden" name="item-type" value="lost">
+                        <div class="form-grid">
+                            <!-- Item Name -->
+                            <div class="form-group">
+                                <label for="item-name" class="form-label">Item Name <span class="required">*</span></label>
+                                <input type="text" id="item-name" name="item-name" class="form-input" placeholder="e.g., Dell XPS 15 Laptop" required>
+                                <div class="form-error" id="name-error">Please enter the item name.</div>
+                            </div>
+
+                            <!-- Category -->
+                            <div class="form-group">
+                                <label for="item-category" class="form-label">Category <span class="required">*</span></label>
+                                <select id="item-category" name="item-category" class="form-select" required>
+                                    <option value="">Select Category</option>
+                                    <option value="ID Cards">ID Cards</option>
+                                    <option value="Mobile Phones">Mobile Phones</option>
+                                    <option value="Laptops">Laptops</option>
+                                    <option value="Bags">Bags</option>
+                                    <option value="Books">Books</option>
+                                    <option value="Keys">Keys</option>
+                                    <option value="Water Bottles">Water Bottles</option>
+                                    <option value="Watches">Watches</option>
+                                    <option value="Accessories">Accessories</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                                <div class="form-error" id="category-error">Please select a category.</div>
+                            </div>
+
+                            <!-- Location -->
+                            <div class="form-group">
+                                <label for="item-location" class="form-label">Last Seen Location <span class="required">*</span></label>
+                                <input type="text" id="item-location" name="item-location" class="form-input" placeholder="e.g., Central Library 2nd Floor Reading Room" required>
+                                <div class="form-error" id="location-error">Please specify where the item was lost.</div>
+                            </div>
+
+                            <!-- Date -->
+                            <div class="form-group">
+                                <label for="item-date" class="form-label">Date Lost <span class="required">*</span></label>
+                                <input type="date" id="item-date" name="item-date" class="form-input" required>
+                                <div class="form-error" id="date-error">Please select a valid date (not in the future).</div>
+                            </div>
+
+                            <!-- Contact Name -->
+                            <div class="form-group">
+                                <label for="contact-name" class="form-label">Your Full Name <span class="required">*</span></label>
+                                <input type="text" id="contact-name" name="contact-name" class="form-input" placeholder="e.g., Dev Anand" required>
+                                <div class="form-error" id="contact-name-error">Please enter your name.</div>
+                            </div>
+
+                            <!-- Contact Email -->
+                            <div class="form-group">
+                                <label for="contact-email" class="form-label">Contact Email <span class="required">*</span></label>
+                                <input type="email" id="contact-email" name="contact-email" class="form-input" placeholder="e.g., student@campus.edu" required>
+                                <div class="form-error" id="email-error">Please enter a valid email address.</div>
+                            </div>
+
+                            <!-- Contact Phone & Preferences -->
+                            <div class="form-group">
+                                <label for="item-contact-phone" class="form-label">Phone Number (Optional)</label>
+                                <input type="tel" id="item-contact-phone" name="item-contact-phone" class="form-input" placeholder="e.g., +91 98765 43210">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="item-contact-pref" class="form-label">Contact Preference</label>
+                                <select id="item-contact-pref" name="item-contact-pref" class="form-select">
+                                    <option value="email">Campus Email</option>
+                                    <option value="phone">Phone / WhatsApp</option>
+                                    <option value="in_person">In-Person at Dept Desk</option>
+                                </select>
+                            </div>
+
+                            <!-- Additional Identifying Marks -->
+                            <div class="form-group full-width">
+                                <label for="item-identifying-marks" class="form-label">Additional Identifying Characteristics (Optional)</label>
+                                <input type="text" id="item-identifying-marks" name="item-identifying-marks" class="form-input" placeholder="e.g., Serial number, distinctive stickers, scratches, case color">
+                            </div>
+
+                            <!-- Description -->
+                            <div class="form-group full-width">
+                                <label for="item-description" class="form-label">Item Description & Identifying Marks <span class="required">*</span></label>
+                                <textarea id="item-description" name="item-description" class="form-textarea" rows="3" placeholder="Provide distinct features like stickers, color, model number, scratches, etc." required></textarea>
+                                <div class="form-error" id="desc-error">Please provide a short description.</div>
+                            </div>
+
+                            <!-- Image Upload Field (Feature 2) -->
+                            <div class="form-group full-width">
+                                <label class="form-label">Attach Item Photograph (Optional)</label>
+                                <div class="image-upload-zone" id="lost-upload-zone">
+                                    <input type="file" id="item-image-file" class="file-input-hidden" accept="image/png, image/jpeg, image/jpg, image/webp">
+                                    <div class="upload-prompt" id="lost-upload-prompt">
+                                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                                            <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                                            <polyline points="21 15 16 10 5 21"></polyline>
+                                        </svg>
+                                        <div class="upload-text">
+                                            <label for="item-image-file" class="upload-link">Click to upload photo</label> or drag and drop
+                                            <span class="upload-hint">PNG, JPG, JPEG, WEBP up to 5MB</span>
+                                        </div>
+                                    </div>
+                                    <div class="image-preview-wrapper d-none" id="lost-image-preview-box">
+                                        <img src="" alt="Lost Item Preview" id="lost-preview-img" class="image-preview-thumb">
+                                        <div class="preview-meta">
+                                            <span class="preview-filename" id="lost-preview-name">item-photo.jpg</span>
+                                            <button type="button" class="btn-remove-photo" id="lost-remove-photo-btn">Remove Photo</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="reset" class="btn btn-ghost" id="reset-lost-form">Clear Form</button>
+                            <button type="submit" class="btn btn-danger" id="submit-report">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <line x1="22" y1="2" x2="11" y2="13"></line>
+                                    <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                                </svg>
+                                <span>Submit Lost Report</span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Found Item Form -->
+                <div class="tab-panel d-none" id="found-tab-panel" role="tabpanel">
+                    <div class="form-banner banner-found">
+                        <div class="banner-badge">Found Item Entry</div>
+                        <p>Found something on campus? File a report with pictures so the owner can securely verify and reclaim it.</p>
+                    </div>
+
+                    <form id="found-item-form" novalidate>
+                        <input type="hidden" name="item-type" value="found">
+                        <div class="form-grid">
+                            <!-- Found Item Name -->
+                            <div class="form-group">
+                                <label for="found-item-name" class="form-label">Item Name <span class="required">*</span></label>
+                                <input type="text" id="found-item-name" name="found-item-name" class="form-input" placeholder="e.g., Casio Scientific Calculator fx-991EX" required>
+                                <div class="form-error" id="found-name-error">Please enter the item name.</div>
+                            </div>
+
+                            <!-- Found Category -->
+                            <div class="form-group">
+                                <label for="found-item-category" class="form-label">Category <span class="required">*</span></label>
+                                <select id="found-item-category" name="found-item-category" class="form-select" required>
+                                    <option value="">Select Category</option>
+                                    <option value="ID Cards">ID Cards</option>
+                                    <option value="Mobile Phones">Mobile Phones</option>
+                                    <option value="Laptops">Laptops</option>
+                                    <option value="Bags">Bags</option>
+                                    <option value="Books">Books</option>
+                                    <option value="Keys">Keys</option>
+                                    <option value="Water Bottles">Water Bottles</option>
+                                    <option value="Watches">Watches</option>
+                                    <option value="Accessories">Accessories</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                                <div class="form-error" id="found-category-error">Please select a category.</div>
+                            </div>
+
+                            <!-- Found Location -->
+                            <div class="form-group">
+                                <label for="found-item-location" class="form-label">Location Found <span class="required">*</span></label>
+                                <input type="text" id="found-item-location" name="found-item-location" class="form-input" placeholder="e.g., Computer Lab 3, Row B" required>
+                                <div class="form-error" id="found-location-error">Please specify where you found it.</div>
+                            </div>
+
+                            <!-- Found Date -->
+                            <div class="form-group">
+                                <label for="found-item-date" class="form-label">Date Found <span class="required">*</span></label>
+                                <input type="date" id="found-item-date" name="found-item-date" class="form-input" required>
+                                <div class="form-error" id="found-date-error">Please select a valid date (not in the future).</div>
+                            </div>
+
+                            <!-- Finder Contact Name -->
+                            <div class="form-group">
+                                <label for="found-contact-name" class="form-label">Finder Name <span class="required">*</span></label>
+                                <input type="text" id="found-contact-name" name="found-contact-name" class="form-input" placeholder="e.g., Priya Sharma" required>
+                                <div class="form-error" id="found-contact-name-error">Please enter your name.</div>
+                            </div>
+
+                            <!-- Finder Contact Email -->
+                            <div class="form-group">
+                                <label for="found-contact-email" class="form-label">Finder Email <span class="required">*</span></label>
+                                <input type="email" id="found-contact-email" name="found-contact-email" class="form-input" placeholder="e.g., finder@campus.edu" required>
+                                <div class="form-error" id="found-email-error">Please enter a valid email address.</div>
+                            </div>
+
+                            <!-- Finder Phone & Preferences -->
+                            <div class="form-group">
+                                <label for="found-contact-phone" class="form-label">Finder Phone (Optional)</label>
+                                <input type="tel" id="found-contact-phone" name="found-contact-phone" class="form-input" placeholder="e.g., +91 99887 76655">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="found-contact-pref" class="form-label">Contact Preference</label>
+                                <select id="found-contact-pref" name="found-contact-pref" class="form-select">
+                                    <option value="email">Campus Email</option>
+                                    <option value="phone">Phone / WhatsApp</option>
+                                    <option value="in_person">In-Person at Campus Desk</option>
+                                </select>
+                            </div>
+
+                            <!-- Found Identifying Clues -->
+                            <div class="form-group full-width">
+                                <label for="found-identifying-marks" class="form-label">Specific Secret Clues / Marks (For Ownership Verification)</label>
+                                <input type="text" id="found-identifying-marks" name="found-identifying-marks" class="form-input" placeholder="e.g., Key traits known only to owner for verification during claim review">
+                            </div>
+
+                            <!-- Found Description -->
+                            <div class="form-group full-width">
+                                <label for="found-item-description" class="form-label">Description & Safekeeping Details <span class="required">*</span></label>
+                                <textarea id="found-item-description" name="found-item-description" class="form-textarea" rows="3" placeholder="Describe the item condition and where it is currently submitted or kept." required></textarea>
+                                <div class="form-error" id="found-desc-error">Please provide description and storage details.</div>
+                            </div>
+
+                            <!-- Found Image Upload Field (Feature 2) -->
+                            <div class="form-group full-width">
+                                <label class="form-label">Attach Item Photograph (Optional)</label>
+                                <div class="image-upload-zone" id="found-upload-zone">
+                                    <input type="file" id="found-image-file" class="file-input-hidden" accept="image/png, image/jpeg, image/jpg, image/webp">
+                                    <div class="upload-prompt" id="found-upload-prompt">
+                                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                                            <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                                            <polyline points="21 15 16 10 5 21"></polyline>
+                                        </svg>
+                                        <div class="upload-text">
+                                            <label for="found-image-file" class="upload-link">Click to upload photo</label> or drag and drop
+                                            <span class="upload-hint">PNG, JPG, JPEG, WEBP up to 5MB</span>
+                                        </div>
+                                    </div>
+                                    <div class="image-preview-wrapper d-none" id="found-image-preview-box">
+                                        <img src="" alt="Found Item Preview" id="found-preview-img" class="image-preview-thumb">
+                                        <div class="preview-meta">
+                                            <span class="preview-filename" id="found-preview-name">item-photo.jpg</span>
+                                            <button type="button" class="btn-remove-photo" id="found-remove-photo-btn">Remove Photo</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="reset" class="btn btn-ghost" id="reset-found-form">Clear Form</button>
+                            <button type="submit" class="btn btn-warning" id="found-submit-report">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <line x1="22" y1="2" x2="11" y2="13"></line>
+                                    <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                                </svg>
+                                <span>Submit Found Report</span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- User My Activity Section (Reports & Claims) -->
+        <section class="my-activity-section d-none" id="my-activity-section">
+            <div class="section-header">
+                <div>
+                    <h2 class="section-title">My Campus Activity</h2>
+                    <p class="section-subtitle">Track your submitted reports and monitor ownership verification claims</p>
+                </div>
+                <div class="tabs-nav">
+                    <button type="button" class="tab-btn active" id="tab-btn-my-reports">
+                        My Reported Items (<span id="my-reports-count">0</span>)
+                    </button>
+                    <button type="button" class="tab-btn" id="tab-btn-my-claims">
+                        My Claim Requests (<span id="my-claims-count">0</span>)
+                    </button>
+                </div>
+            </div>
+
+            <!-- Panel: User Reports -->
+            <div class="activity-panel" id="panel-my-reports">
+                <div class="item-grid" id="my-reports-list">
+                    <!-- Populated dynamically -->
+                </div>
+            </div>
+
+            <!-- Panel: User Claims -->
+            <div class="activity-panel d-none" id="panel-my-claims">
+                <div class="claims-table-card">
+                    <div class="table-responsive">
+                        <table class="data-table" id="my-claims-table">
+                            <thead>
+                                <tr>
+                                    <th>Item Name</th>
+                                    <th>Claim Date</th>
+                                    <th>Ownership Proof Summary</th>
+                                    <th>Status</th>
+                                    <th>Admin Notes / Pickup Instructions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="my-claims-tbody">
+                                <!-- Populated dynamically -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Search, Filter & Catalog Section -->
+        <section class="catalog-section" id="catalog-section">
+            <div class="section-header">
+                <div>
+                    <h2 class="section-title">Campus Item Directory</h2>
+                    <p class="section-subtitle">Search, filter, inspect details, view photos, and submit ownership claims</p>
+                </div>
+                <div class="catalog-count-badge">
+                    Showing <span id="displayed-items-count">0</span> items
+                </div>
+            </div>
+
+            <!-- Filter & Search Controls Toolbar -->
+            <div class="filter-toolbar" id="filter-toolbar">
+                <div class="search-box">
+                    <svg class="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                    </svg>
+                    <input type="text" id="search-input" class="search-input" placeholder="Search items by name, description, or finder...">
+                    <button type="button" class="search-clear-btn d-none" id="search-clear-btn" aria-label="Clear search">&times;</button>
+                </div>
+
+                <div class="filter-group">
+                    <!-- Category Filter -->
+                    <div class="select-wrapper">
+                        <label for="category-filter" class="sr-only">Filter by Category</label>
+                        <select id="category-filter" class="filter-select">
+                            <option value="all">All Categories</option>
+                            <option value="ID Cards">ID Cards</option>
+                            <option value="Mobile Phones">Mobile Phones</option>
+                            <option value="Laptops">Laptops</option>
+                            <option value="Bags">Bags</option>
+                            <option value="Books">Books</option>
+                            <option value="Keys">Keys</option>
+                            <option value="Water Bottles">Water Bottles</option>
+                            <option value="Watches">Watches</option>
+                            <option value="Accessories">Accessories</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+
+                    <!-- Status Filter -->
+                    <div class="select-wrapper">
+                        <label for="status-filter" class="sr-only">Filter by Status</label>
+                        <select id="status-filter" class="filter-select">
+                            <option value="all">All Statuses</option>
+                            <option value="lost">Lost</option>
+                            <option value="found">Found</option>
+                            <option value="recovered">Recovered</option>
+                        </select>
+                    </div>
+
+                    <!-- Location Filter -->
+                    <div class="select-wrapper">
+                        <label for="location-filter" class="sr-only">Filter by Location</label>
+                        <select id="location-filter" class="filter-select">
+                            <option value="all">All Locations</option>
+                            <option value="Library">Central Library</option>
+                            <option value="Lab">Computer / Tech Labs</option>
+                            <option value="Cafeteria">Cafeteria / Food Court</option>
+                            <option value="Sports">Sports Complex</option>
+                            <option value="Hall">Auditorium & Halls</option>
+                            <option value="Gate">Campus Gates & Parking</option>
+                        </select>
+                    </div>
+
+                    <!-- Incident Date Filter (Feature 7) -->
+                    <div class="select-wrapper">
+                        <label for="date-filter" class="sr-only">Filter by Incident Date</label>
+                        <input type="date" id="date-filter" class="filter-input-date" title="Filter by incident date">
+                    </div>
+
+                    <!-- Sort By Newest / Oldest (Feature 7) -->
+                    <div class="select-wrapper">
+                        <label for="sort-filter" class="sr-only">Sort Results</label>
+                        <select id="sort-filter" class="filter-select">
+                            <option value="newest">Sort: Newest First</option>
+                            <option value="oldest">Sort: Oldest First</option>
+                        </select>
+                    </div>
+
+                    <!-- Reset Filters Button -->
+                    <button type="button" class="btn btn-outline" id="clear-filters-btn" title="Reset search and filters">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                        <span>Clear Filters</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Empty State -->
+            <div class="empty-state d-none" id="empty-state">
+                <div class="empty-icon">
+                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                        <line x1="8" y1="11" x2="14" y2="11"></line>
+                    </svg>
+                </div>
+                <h3 class="empty-title" id="empty-title">No Matching Items Found</h3>
+                <p class="empty-text" id="empty-text">We couldn't find any items matching your active search query or filter settings.</p>
+                <button type="button" class="btn btn-outline" id="empty-reset-btn">Reset Filters</button>
+            </div>
+
+            <!-- Item Cards Container -->
+            <div class="item-grid" id="item-list">
+                <!-- Dynamically populated by script.js -->
+            </div>
+        </section>
+
+        <!-- Moderator Section (Feature 1 - Moderator Role) -->
+        <section class="moderator-section d-none" id="moderator-section">
+            <div class="section-header">
+                <div>
+                    <h2 class="section-title">Moderator Review Center</h2>
+                    <p class="section-subtitle">Inspect newly submitted reports, flag duplicates/suspicious activity, and manage visibility</p>
+                </div>
+                <div class="tabs-nav">
+                    <button type="button" class="tab-btn active" id="tab-mod-all">All Campus Reports</button>
+                    <button type="button" class="tab-btn" id="tab-mod-flagged">Flagged Items (<span id="mod-flagged-count">0</span>)</button>
+                    <button type="button" class="tab-btn" id="tab-mod-hidden">Hidden Items (<span id="mod-hidden-count">0</span>)</button>
+                </div>
+            </div>
+
+            <div class="mod-container" id="mod-items-container">
+                <!-- Populated dynamically with moderation cards -->
+            </div>
+        </section>
+
+        <!-- Admin Portal Section (Feature 1 - Admin Role) -->
+        <section class="admin-section d-none" id="admin-section">
+            <div class="section-header">
+                <div>
+                    <h2 class="section-title">Administrator Management Portal</h2>
+                    <p class="section-subtitle">Campus oversight, claim authorizations, user roles, categories, and audit logs</p>
+                </div>
+                <div class="tabs-nav">
+                    <button type="button" class="tab-btn active" id="tab-admin-overview">Overview</button>
+                    <button type="button" class="tab-btn" id="tab-admin-claims">Claim Verifications (<span id="admin-pending-claims-count">0</span>)</button>
+                    <button type="button" class="tab-btn" id="tab-admin-users">Users (<span id="admin-users-count">0</span>)</button>
+                    <button type="button" class="tab-btn" id="tab-admin-categories">Categories</button>
+                    <button type="button" class="tab-btn" id="tab-admin-logs">Audit Log</button>
+                </div>
+            </div>
+
+            <!-- Admin Overview Panel -->
+            <div class="admin-panel" id="panel-admin-overview">
+                <div class="admin-metrics-grid">
+                    <div class="admin-metric-card">
+                        <span class="metric-title">Registered Accounts</span>
+                        <div class="metric-num" id="admin-metric-users">3</div>
+                        <span class="metric-sub">Across Student, Mod, & Admin</span>
+                    </div>
+                    <div class="admin-metric-card">
+                        <span class="metric-title">Total Reports Filed</span>
+                        <div class="metric-num" id="admin-metric-reports">6</div>
+                        <span class="metric-sub">Lost & found items recorded</span>
+                    </div>
+                    <div class="admin-metric-card">
+                        <span class="metric-title">Pending Ownership Claims</span>
+                        <div class="metric-num text-warning" id="admin-metric-claims">0</div>
+                        <span class="metric-sub">Awaiting verification</span>
+                    </div>
+                    <div class="admin-metric-card">
+                        <span class="metric-title">Items Successfully Returned</span>
+                        <div class="metric-num text-success" id="admin-metric-resolved">2</div>
+                        <span class="metric-sub">33.3% Campus Return Rate</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Admin Claims Panel -->
+            <div class="admin-panel d-none" id="panel-admin-claims">
+                <div class="claims-table-card">
+                    <div class="table-responsive">
+                        <table class="data-table" id="admin-claims-table">
+                            <thead>
+                                <tr>
+                                    <th>Item Claimed</th>
+                                    <th>Claimant Details</th>
+                                    <th>Proof Description & Clues</th>
+                                    <th>Date Submitted</th>
+                                    <th>Status</th>
+                                    <th>Verification Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="admin-claims-tbody">
+                                <!-- Populated dynamically -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Admin Users Panel -->
+            <div class="admin-panel d-none" id="panel-admin-users">
+                <div class="claims-table-card">
+                    <div class="table-responsive">
+                        <table class="data-table" id="admin-users-table">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Campus Email</th>
+                                    <th>Campus ID</th>
+                                    <th>Department</th>
+                                    <th>Current Role</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="admin-users-tbody">
+                                <!-- Populated dynamically -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Admin Categories Panel -->
+            <div class="admin-panel d-none" id="panel-admin-categories">
+                <div class="category-manager-grid">
+                    <div class="category-card-form">
+                        <h4 class="form-title">Add New Category</h4>
+                        <p class="form-sub">Define new classification for campus items</p>
+                        <div class="form-group" style="margin-top: 1rem;">
+                            <label for="new-category-input" class="form-label">Category Name</label>
+                            <input type="text" id="new-category-input" class="form-input" placeholder="e.g., Laboratory Equipment">
+                        </div>
+                        <button type="button" class="btn btn-primary" id="add-category-btn" style="margin-top: 1rem;">
+                            Add Category
+                        </button>
+                    </div>
+                    <div class="category-card-list">
+                        <h4 class="form-title">Active Categories (<span id="cat-count">7</span>)</h4>
+                        <ul class="category-pills-list" id="admin-category-list">
+                            <!-- Populated dynamically -->
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Admin Audit Logs Panel -->
+            <div class="admin-panel d-none" id="panel-admin-logs">
+                <div class="claims-table-card">
+                    <div class="table-responsive">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Timestamp</th>
+                                    <th>Actor</th>
+                                    <th>Action Performed</th>
+                                    <th>Target Entity</th>
+                                    <th>Details</th>
+                                </tr>
+                            </thead>
+                            <tbody id="admin-logs-tbody">
+                                <!-- Populated dynamically -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Confirmation Modal for Delete -->
+    <div class="modal-backdrop d-none" id="delete-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+        <div class="modal-card">
+            <div class="modal-header">
+                <div class="modal-icon danger">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M3 6h18"></path>
+                        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                    </svg>
+                </div>
+                <h3 class="modal-title" id="modal-title">Delete Item Report</h3>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to permanently delete <strong id="delete-item-name-preview">this item</strong>? This action cannot be undone.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-ghost" id="cancel-delete-btn">Cancel</button>
+                <button type="button" class="btn btn-danger" id="confirm-delete-btn">Delete Report</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Details View Modal -->
+    <div class="modal-backdrop d-none" id="details-modal" role="dialog" aria-modal="true" aria-labelledby="details-title">
+        <div class="modal-card modal-lg">
+            <div class="modal-header">
+                <div class="modal-badge-group">
+                    <span class="badge" id="details-type-badge">Lost</span>
+                    <span class="badge" id="details-status-badge">Active</span>
+                    <span class="badge badge-warning d-none" id="details-flag-badge">Flagged for Review</span>
+                </div>
+                <button type="button" class="modal-close-btn" id="close-details-btn" aria-label="Close modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <!-- Large Item Photo in Details (Feature 2) -->
+                <div class="details-image-box d-none" id="details-image-container">
+                    <img src="" alt="Item photo" id="details-item-image" class="details-img-preview">
+                </div>
+
+                <h3 class="details-item-title" id="details-title">Item Title</h3>
+                <div class="details-meta-grid">
+                    <div class="meta-item">
+                        <span class="meta-label">Category</span>
+                        <span class="meta-value" id="details-category">Category</span>
+                    </div>
+                    <div class="meta-item">
+                        <span class="meta-label">Location</span>
+                        <span class="meta-value" id="details-location">Location</span>
+                    </div>
+                    <div class="meta-item">
+                        <span class="meta-label">Incident Date</span>
+                        <span class="meta-value" id="details-date">Date</span>
+                    </div>
+                    <div class="meta-item">
+                        <span class="meta-label">Contact Person</span>
+                        <span class="meta-value" id="details-contact-name">Name</span>
+                    </div>
+                    <div class="meta-item">
+                        <span class="meta-label">Contact Email</span>
+                        <a href="#" class="meta-value meta-link" id="details-contact-email">Email</a>
+                    </div>
+                    <div class="meta-item">
+                        <span class="meta-label">Incident Reference</span>
+                        <span class="meta-value" id="details-item-id">ID</span>
+                    </div>
+                </div>
+                <div class="details-desc-box">
+                    <h4 class="desc-heading">Description & Clues</h4>
+                    <p id="details-description">Description text</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-ghost" id="dismiss-details-btn">Close</button>
+                <button type="button" class="btn btn-warning d-none" id="details-claim-btn">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                    </svg>
+                    <span>Claim Item</span>
+                </button>
+                <button type="button" class="btn btn-success" id="details-recover-btn">Mark as Recovered</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Claim Request Modal (Feature 1: Student Claiming Found Item) -->
+    <div class="modal-backdrop d-none" id="claim-modal" role="dialog" aria-modal="true" aria-labelledby="claim-modal-title">
+        <div class="modal-card">
+            <div class="modal-header">
+                <div class="modal-icon warning">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                    </svg>
+                </div>
+                <h3 class="modal-title" id="claim-modal-title">Submit Ownership Claim</h3>
+            </div>
+            <form id="claim-form" novalidate>
+                <div class="modal-body">
+                    <p style="margin-bottom: 1rem;">Claiming: <strong id="claim-item-title-display">Item Name</strong></p>
+                    <input type="hidden" id="claim-item-id">
+                    
+                    <div class="form-group" style="margin-bottom: 0.85rem;">
+                        <label for="claim-name" class="form-label">Full Name <span class="required">*</span></label>
+                        <input type="text" id="claim-name" class="form-input" required>
+                    </div>
+
+                    <div class="form-group" style="margin-bottom: 0.85rem;">
+                        <label for="claim-email" class="form-label">Campus Email <span class="required">*</span></label>
+                        <input type="email" id="claim-email" class="form-input" required>
+                    </div>
+
+                    <div class="form-group" style="margin-bottom: 0.85rem;">
+                        <label for="claim-phone" class="form-label">Phone Number <span class="required">*</span></label>
+                        <input type="tel" id="claim-phone" class="form-input" placeholder="e.g., +91 9876543210" required>
+                    </div>
+
+                    <div class="form-group" style="margin-bottom: 0.85rem;">
+                        <label for="claim-proof" class="form-label">Proof of Ownership & Unique Marks <span class="required">*</span></label>
+                        <textarea id="claim-proof" class="form-textarea" rows="3" placeholder="Describe unique identifying marks (e.g., serial number, specific contents, stickers, passcode, lock screen picture)." required></textarea>
+                        <div class="form-error" id="claim-proof-error">Please provide specific ownership proof.</div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-ghost" id="cancel-claim-btn">Cancel</button>
+                    <button type="submit" class="btn btn-warning" id="submit-claim-btn">Submit Claim</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Sign In Modal -->
+    <div class="modal-backdrop d-none" id="login-modal" role="dialog" aria-modal="true" aria-labelledby="login-title">
+        <div class="modal-card">
+            <div class="modal-header">
+                <div>
+                    <h3 class="modal-title" id="login-title">Sign In to FindIt</h3>
+                    <p style="font-size: 0.85rem; color: var(--slate-500); margin-top: 0.2rem;">Access your claims, reports, and administrative tools</p>
+                </div>
+                <button type="button" class="modal-close-btn" id="close-login-btn">&times;</button>
+            </div>
+            
+            <!-- Quick Demo Accounts One-Click Fill -->
+            <div class="demo-login-box">
+                <span class="demo-login-title">One-Click Demo Credentials:</span>
+                <div class="demo-btn-group">
+                    <button type="button" class="btn-demo-account" id="demo-student-fill" title="devanand@campus.edu">
+                        <strong>Student</strong>
+                    </button>
+                    <button type="button" class="btn-demo-account" id="demo-mod-fill" title="moderator@campus.edu">
+                        <strong>Moderator</strong>
+                    </button>
+                    <button type="button" class="btn-demo-account" id="demo-admin-fill" title="admin@campus.edu">
+                        <strong>Admin</strong>
+                    </button>
+                </div>
+            </div>
+
+            <form id="login-form" novalidate>
+                <div class="modal-body" style="padding-top: 0.5rem;">
+                    <div class="form-group" style="margin-bottom: 1rem;">
+                        <label for="login-email" class="form-label">Campus Email</label>
+                        <input type="email" id="login-email" class="form-input" placeholder="student@campus.edu" required>
+                        <div class="form-error" id="login-email-error">Please enter your registered email.</div>
+                    </div>
+
+                    <div class="form-group" style="margin-bottom: 1rem;">
+                        <label for="login-password" class="form-label">Password</label>
+                        <input type="password" id="login-password" class="form-input" placeholder="••••••••" required>
+                        <div class="form-error" id="login-password-error">Password must not be empty.</div>
+                    </div>
+                </div>
+
+                <div class="modal-footer" style="justify-content: space-between;">
+                    <span style="font-size: 0.85rem; color: var(--slate-500);">
+                        New student? <a href="#" id="link-open-register" class="meta-link">Register here</a>
+                    </span>
+                    <button type="submit" class="btn btn-primary" id="btn-submit-login">Sign In</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Register Modal -->
+    <div class="modal-backdrop d-none" id="register-modal" role="dialog" aria-modal="true" aria-labelledby="register-title">
+        <div class="modal-card">
+            <div class="modal-header">
+                <div>
+                    <h3 class="modal-title" id="register-title">Create Campus Account</h3>
+                    <p style="font-size: 0.85rem; color: var(--slate-500); margin-top: 0.2rem;">Register to report items and submit ownership claims</p>
+                </div>
+                <button type="button" class="modal-close-btn" id="close-register-btn">&times;</button>
+            </div>
+            <form id="register-form" novalidate>
+                <div class="modal-body">
+                    <div class="form-group" style="margin-bottom: 0.85rem;">
+                        <label for="reg-name" class="form-label">Full Name <span class="required">*</span></label>
+                        <input type="text" id="reg-name" class="form-input" placeholder="e.g., Rohit Mehta" required>
+                        <div class="form-error" id="reg-name-error">Please enter your full name.</div>
+                    </div>
+
+                    <div class="form-group" style="margin-bottom: 0.85rem;">
+                        <label for="reg-email" class="form-label">Campus Email <span class="required">*</span></label>
+                        <input type="email" id="reg-email" class="form-input" placeholder="rohit.cse@campus.edu" required>
+                        <div class="form-error" id="reg-email-error">Please enter a valid campus email.</div>
+                    </div>
+
+                    <div class="form-grid" style="margin-bottom: 0.85rem;">
+                        <div class="form-group">
+                            <label for="reg-id" class="form-label">Student / Staff ID <span class="required">*</span></label>
+                            <input type="text" id="reg-id" class="form-input" placeholder="e.g., 22BCS108" required>
+                            <div class="form-error" id="reg-id-error">ID is required.</div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="reg-dept" class="form-label">Department <span class="required">*</span></label>
+                            <select id="reg-dept" class="form-select" required>
+                                <option value="Computer Science">Computer Science</option>
+                                <option value="Information Tech">Information Tech</option>
+                                <option value="Electronics & Comm">Electronics & Comm</option>
+                                <option value="Mechanical Eng">Mechanical Eng</option>
+                                <option value="Management Studies">Management Studies</option>
+                                <option value="Campus Administration">Campus Administration</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group" style="margin-bottom: 0.85rem;">
+                        <label for="reg-role" class="form-label">Requested Account Role <span class="required">*</span></label>
+                        <select id="reg-role" class="form-select">
+                            <option value="student">Student (Standard User)</option>
+                            <option value="moderator">Faculty / Staff Moderator</option>
+                            <option value="admin">Campus Administrator</option>
+                        </select>
+                    </div>
+
+                    <div class="form-grid" style="margin-bottom: 0.85rem;">
+                        <div class="form-group">
+                            <label for="reg-password" class="form-label">Password <span class="required">*</span></label>
+                            <input type="password" id="reg-password" class="form-input" placeholder="Min 6 characters" required>
+                            <div class="form-error" id="reg-pass-error">Minimum 6 characters.</div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="reg-confirm-password" class="form-label">Confirm Password <span class="required">*</span></label>
+                            <input type="password" id="reg-confirm-password" class="form-input" placeholder="Re-enter password" required>
+                            <div class="form-error" id="reg-confirm-error">Passwords must match.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer" style="justify-content: space-between;">
+                    <span style="font-size: 0.85rem; color: var(--slate-500);">
+                        Already registered? <a href="#" id="link-open-login" class="meta-link">Sign in</a>
+                    </span>
+                    <button type="submit" class="btn btn-primary" id="btn-submit-register">Create Account</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- User Profile Modal -->
+    <div class="modal-backdrop d-none" id="profile-modal" role="dialog" aria-modal="true" aria-labelledby="profile-title">
+        <div class="modal-card">
+            <div class="modal-header">
+                <div>
+                    <h3 class="modal-title" id="profile-title">My Profile</h3>
+                    <p style="font-size: 0.85rem; color: var(--slate-500);">View and update your campus user information</p>
+                </div>
+                <button type="button" class="modal-close-btn" id="close-profile-btn">&times;</button>
+            </div>
+            <form id="profile-form">
+                <div class="modal-body">
+                    <div class="profile-card-top">
+                        <div class="profile-avatar-large" id="profile-avatar-display">DA</div>
+                        <div class="profile-title-box">
+                            <h4 id="profile-name-heading">Dev Anand</h4>
+                            <span class="role-pill-badge role-badge-student" id="profile-role-badge">Student</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group" style="margin-bottom: 0.85rem;">
+                        <label for="profile-name" class="form-label">Full Name</label>
+                        <input type="text" id="profile-name" class="form-input" required>
+                    </div>
+
+                    <div class="form-group" style="margin-bottom: 0.85rem;">
+                        <label for="profile-email" class="form-label">Email Address (Read-only)</label>
+                        <input type="email" id="profile-email" class="form-input" disabled style="background-color: var(--slate-100);">
+                    </div>
+
+                    <div class="form-group" style="margin-bottom: 0.85rem;">
+                        <label for="profile-student-id" class="form-label">Campus Student / Staff ID</label>
+                        <input type="text" id="profile-student-id" class="form-input" placeholder="e.g., 22BCS108">
+                    </div>
+
+                    <div class="form-group" style="margin-bottom: 0.85rem;">
+                        <label for="profile-dept" class="form-label">Department / Branch</label>
+                        <input type="text" id="profile-dept" class="form-input">
+                    </div>
+
+                    <div class="form-group" style="margin-bottom: 0.85rem;">
+                        <label for="profile-phone" class="form-label">Contact Phone</label>
+                        <input type="tel" id="profile-phone" class="form-input" placeholder="+91 9876543210">
+                    </div>
+
+                    <div class="form-group" style="margin-bottom: 0.85rem;">
+                        <label for="profile-contact-pref" class="form-label">Preferred Contact Method</label>
+                        <select id="profile-contact-pref" class="form-select">
+                            <option value="email">Campus Email</option>
+                            <option value="phone">Phone / WhatsApp</option>
+                            <option value="in_person">In-Person at Department Desk</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group" style="margin-bottom: 0.85rem; display: flex; align-items: center; gap: 0.5rem;">
+                        <input type="checkbox" id="profile-notif-pref" checked>
+                        <label for="profile-notif-pref" class="form-label" style="margin: 0; cursor: pointer;">Receive In-App Notifications for claim updates</label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-ghost" id="dismiss-profile-btn">Cancel</button>
+                    <button type="submit" class="btn btn-primary" id="save-profile-btn">Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Fullscreen Image Gallery Modal (Feature 2) -->
+    <div class="modal-backdrop d-none" id="gallery-modal" role="dialog" aria-modal="true" aria-labelledby="gallery-title">
+        <div class="modal-card modal-lg gallery-modal-card">
+            <div class="modal-header">
+                <h3 class="modal-title" id="gallery-title">Item Photo Gallery</h3>
+                <button type="button" class="modal-close-btn" id="close-gallery-btn">&times;</button>
+            </div>
+            <div class="gallery-body">
+                <img src="" alt="Full view item photo" id="gallery-modal-img" class="gallery-full-img">
+            </div>
+            <div class="modal-footer" style="justify-content: space-between;">
+                <span class="gallery-caption" id="gallery-caption">Photo proof submitted by reporter</span>
+                <button type="button" class="btn btn-outline btn-sm" id="dismiss-gallery-btn">Close Viewer</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer" id="footer">
+        <div class="footer-container">
+            <div class="footer-info">
+                <div class="brand-title">Find<span class="brand-accent">It</span></div>
+                <p>Software Testing Lab Mini-Project • Role-Based Lost & Found Management System</p>
+                <p class="copyright">&copy; 2026 FindIt Campus Portal. Built for automated quality assurance and verification.</p>
+            </div>
+            <div class="footer-tags">
+                <span class="tag-pill">Role-Based Access Control</span>
+                <span class="tag-pill">Photo Verification</span>
+                <span class="tag-pill">Claims Management</span>
+                <span class="tag-pill">Moderation System</span>
+                <span class="tag-pill">Selenium WebDriver</span>
+                <span class="tag-pill">pytest</span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- App Script -->
+    <script src="script.js"></script>
+</body>
+</html>
